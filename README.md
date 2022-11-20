@@ -1,4 +1,4 @@
-# DiffTurret
+# DiffTurret 🗼
 
 Hacky shell script for detecting changes in websites using `curl` and `diff`. 
 Can serve as alternative to [ChangeTower](https://changetower.com/) when 
