@@ -43,6 +43,7 @@ if [ -e "$FILENAME" ]; then
         cat "$TMP" | ./notify.py $DISCORD_TOKEN $DISCORD_CHANNEL
         rm "$TMP"
     fi
+    echo "$FILENAME"
 else
     load_site
 fi
