@@ -4,6 +4,7 @@ cd "$(dirname $0)"
 
 MESSAGE_TOTAL_LENGTH_LIMIT=1900
 MESSAGE_LINE_LENGTH_LIMIT=120
+MESSAGE_STRIP_HTML_TAGS="true"
 
 # discord.env must set environment variables like so:
 # DISCORD_TOKEN="..."
@@ -39,6 +40,9 @@ if [ -e "$FILENAME" ]; then
         echo '```diff' >> $TMP
         set +e # allow non-zero exit codes
         diff -u "$FILENAME.old" "$FILENAME" | cut -c -$MESSAGE_LINE_LENGTH_LIMIT | head -c $MESSAGE_TOTAL_LENGTH_LIMIT >> $TMP
+        if [ "$MESSAGE_STRIP_HTML_TAGS" = "true" ]; then
+            sed -i "s:</\?[^>]\+>::g" $TMP
+        fi
         set -e # end
         echo '```' >> $TMP
         cat "$TMP" | ./notify.py $DISCORD_TOKEN $DISCORD_CHANNEL
